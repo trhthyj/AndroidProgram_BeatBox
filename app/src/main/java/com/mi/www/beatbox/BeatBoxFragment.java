@@ -3,6 +3,7 @@ package com.mi.www.beatbox;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,6 +26,12 @@ public class BeatBoxFragment extends Fragment {
         return new BeatBoxFragment();
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);//设备旋转时会保留fragment
+        mBeatBox = new BeatBox(getActivity());
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -33,12 +40,17 @@ public class BeatBoxFragment extends Fragment {
        View view = inflater.inflate(R.layout.fragment_beat_box, container, false);
         mRecyclerView = view.findViewById(R.id.recycler_view);
         return view;*/
-        mBeatBox = new BeatBox(getActivity());
         FragmentBeatBoxBinding binding = DataBindingUtil.inflate(
                 inflater, R.layout.fragment_beat_box, container, false);
         binding.recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         binding.recyclerView.setAdapter(new SoundAdapter(mBeatBox.getSounds()));
         return binding.getRoot();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mBeatBox.release();
     }
 
     private class SoundAdapter extends RecyclerView.Adapter<SoundHolder> {
