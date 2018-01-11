@@ -6,6 +6,22 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <!--更改按钮样式-->
+        <item name="buttonStyle">@style/BeatBoxButton</item>
     </style>
+
+    <style name="BeatBoxButton" parent="Widget.AppCompat.Button">
+        <item name="android:background">@color/dark_blue</item>
+    </style>
+
+    //相当于parent是BeatBoxButton，下面两个style是等效的
+    <style name="BeatBoxButton.Strong">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="StrongBeatBoxButton" parent="@style/BeatBoxButton">
+        <item name="android:textStyle">bold</item>
+    </style>
+
 
 </resources>
